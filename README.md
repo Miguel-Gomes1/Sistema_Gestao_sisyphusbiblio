@@ -67,7 +67,6 @@ O sistema é composto pelas seguintes entidades:
 
 * Código
 * Título
-* ISBN
 * Autor
 * Editora
 * Categoria
