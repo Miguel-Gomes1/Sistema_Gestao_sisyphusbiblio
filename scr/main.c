@@ -7,6 +7,7 @@ struct Livro{
     int codigo;
     char titulo[200];
     char autor[100];
+    int status;
 };
 
 struct Livro livros[MAX];
@@ -15,6 +16,8 @@ int totalLivros = 0;
 void menuLivros();
 void cadastrarLivro();
 void listarLivros();
+void buscarLivro();
+void ativarDesativarLivro();
 
 int main(){
     setlocale(LC_ALL, "Portuguese");
@@ -24,10 +27,10 @@ int main(){
     do{
         printf("\n=== SISIPHUSBIBLIO ===\n");
         printf("1. Livros\n");
-        printf("2. Usuarios\n");
-        printf("3. Emprestimos\n");
-        printf("4. Devolucoes\n");
-        printf("5. Historico\n");
+        printf("2. Usuários\n");
+        printf("3. Empréstimos\n");
+        printf("4. Devoluções\n");
+        printf("5. Histórico\n");
         printf("0. Sair\n");
 
         printf("\nEscolha uma opcao: ");
@@ -76,8 +79,7 @@ void menuLivros(){
         printf("1. Cadastrar livro\n");
         printf("2. Listar livros\n");
         printf("3. Buscar livro\n");
-        printf("4. Editar livro\n");
-        printf("5. Ativar/Desativar livro\n");
+        printf("4. Ativar/Desativar livro\n");
         printf("0. Voltar\n");
 
         printf("\nEscolha uma opcao: ");
@@ -93,15 +95,11 @@ void menuLivros(){
                 break;
 
             case 3:
-                printf("\nBuscar livro em desenvolvimento.\n");
+                buscarLivro();
                 break;
 
             case 4:
-                printf("\nEditar livro em desenvolvimento.\n");
-                break;
-
-            case 5:
-                printf("\nAtivar/Desativar livro em desenvolvimento.\n");
+                ativarDesativarLivro();
                 break;
 
             case 0:
@@ -117,6 +115,11 @@ void menuLivros(){
 
 void cadastrarLivro(){
 
+    if(totalLivros >= MAX){
+        printf("\nLimite de livros atingido!!!!\n");
+        return;
+    }
+
     printf("\n=== CADASTRO DE LIVRO ===\n");
 
     livros[totalLivros].codigo = totalLivros + 1;
@@ -131,8 +134,8 @@ void cadastrarLivro(){
     printf("Autor: ");
     fgets(livros[totalLivros].autor,
           sizeof(livros[totalLivros].autor),
-          stdin);
-
+        stdin);
+    livros[totalLivros].status = 1;
     totalLivros++;
 
     printf("\nLivro cadastrado com sucesso!\n");
@@ -151,8 +154,89 @@ void listarLivros(){
 
     for(i = 0; i < totalLivros; i++){
 
+        printf("\n---------------------------");
         printf("\nCodigo: %d\n", livros[i].codigo);
         printf("Titulo: %s", livros[i].titulo);
         printf("Autor: %s", livros[i].autor);
+        printf("Status: ");
+
+        if(livros[i].status == 1)
+        {
+        printf("Ativo\n");
+        }else{
+        printf("Inativo\n");
+            }
     }
+}
+
+void buscarLivro(){
+    int i;
+    int codigoBuscado;
+    int encontrou = 0;
+
+    printf("\n=== Buscar Livro ===\n");
+    
+    printf("Digite o código do livro: ");
+    scanf("%d", &codigoBuscado);
+
+    for(i = 0; i < totalLivros; i++)
+    {
+        if(livros[i].codigo == codigoBuscado)
+        {
+            printf("\nLivro encontrado!\n");
+
+            printf("Codigo: %d\n", livros[i].codigo);
+            printf("Titulo: %s", livros[i].titulo);
+            printf("Autor: %s", livros[i].autor);
+
+            printf("Status: ");
+
+            if(livros[i].status == 1)
+            {
+                printf("Ativo\n");
+            }
+            else
+            {
+                printf("Inativo\n");
+            }
+
+            encontrou = 1;
+            break;
+        }
+    }
+
+    if(encontrou == 0)
+    {
+        printf("\nLivro nao encontrado.\n");
+    }
+}
+
+
+void  ativarDesativarLivro(){
+    int codigo;
+    int i; 
+
+    printf("\nDigite o código do livro: ");
+    scanf("%d", &codigo);
+
+    for(i = 0; i < totalLivros; i++)
+    {
+        if(livros[i].codigo == codigo)
+        {
+        if(livros[i].status == 1)
+            {
+                livros[i].status = 0;
+                printf("\nLivro inativado.\n");
+            }
+            else
+            {
+                livros[i].status = 1;
+                printf("\nLivro ativado.\n");
+            }
+
+            return;
+        }
+    }
+
+    printf("\nLivro nao encontrado.\n");
 }
