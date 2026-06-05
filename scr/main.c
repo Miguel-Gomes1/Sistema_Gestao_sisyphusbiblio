@@ -18,101 +18,141 @@ void listarLivros();
 
 int main(){
     setlocale(LC_ALL, "Portuguese");
-    
+
     int opcao;
-    int opcaoLivros;
-   
+
     do{
-        printf("\n===SISIPHUSBIBLIO===\n");
-        printf("\n1. Livros");
-        printf("\n2. Usuários");
-        printf("\n3. Empréstimos");
-        printf("\n4. Devoluções");
-        printf("\n5. Histórico");
-        printf("\n0. Sair\n");
-        printf("\nEscolha uma opção: ");
+        printf("\n=== SISIPHUSBIBLIO ===\n");
+        printf("1. Livros\n");
+        printf("2. Usuarios\n");
+        printf("3. Emprestimos\n");
+        printf("4. Devolucoes\n");
+        printf("5. Historico\n");
+        printf("0. Sair\n");
+
+        printf("\nEscolha uma opcao: ");
         scanf("%d", &opcao);
-        
+
         switch(opcao){
-        case 1:
-           menuLivros();
-           break;
+            case 1:
+                menuLivros();
+                break;
 
-        case 2:
-            printf("\n1.Cadastrar usuário\n");
-            printf("\n2.Listar usuários\n");
-            printf("\n3.Buscar usuário\n");
-            printf("\n4.Editar informação de usuário\n");
-            printf("\n5.Ativar/Desativar usuário\n");
-            printf("\n0.Voltar\n");
-            printf("\nEscolha uma opção: ");
-            scanf("%d", &opcaoLivros);
-            break;
+            case 2:
+                printf("\nModulo Usuarios em desenvolvimento.\n");
+                break;
 
-        case 3:
-            printf("\n1.Realizar empréstimo\n");
-            printf("\n2.Listar empréstimos ativos\n");
-            printf("\n0.Voltar\n");
-            printf("\nEscolha uma opção: ");
-            scanf("%d", &opcaoLivros);
-            break;
+            case 3:
+                printf("\nModulo Emprestimos em desenvolvimento.\n");
+                break;
 
-        case 4:
-            printf("\n1.Registrar Devolução\n");
-            printf("\n0.Voltar");
-            printf("\nEscolha uma opção: ");
-            scanf("%d", &opcaoLivros);
-            break;
+            case 4:
+                printf("\nModulo Devolucoes em desenvolvimento.\n");
+                break;
 
-        case 5:
-            printf("\n1.Histórico completo\n");
-            printf("\n2.Filtrar por usuário\n");
-            printf("\n3.Filtrar por livro\n");
-            printf("\n0.Voltar\n");
-            printf("\nEscolha uma opção: ");
-            scanf("%d", &opcaoLivros);
-            break;
-        default:
-        printf("\nOpção inválida...\n");
+            case 5:
+                printf("\nModulo Historico em desenvolvimento.\n");
+                break;
+
+            case 0:
+                printf("\nEncerrando sistema...\n");
+                break;
+
+            default:
+                printf("\nOpcao invalida!\n");
         }
-    } while (opcao != 0);
+
+    } while(opcao != 0);
+
+    return 0;
 }
 
 void menuLivros(){
 
     int opcaoLivros;
- 
+
     do{
-            printf("\n1. Cadastrar livros");
-            printf("\n2. Listar livros");
-            printf("\n3. Buscar livro");
-            printf("\n4. Editar livro");
-            printf("\n5. Ativar/Desativar livro");
-            printf("\n0. Voltar");
-            printf("\nEscolha uma opção: ");
-            scanf("%d", &opcaoLivros);
-            break;
-    }
-}while (opcao != 0);
+        printf("\n=== MENU LIVROS ===\n");
+        printf("1. Cadastrar livro\n");
+        printf("2. Listar livros\n");
+        printf("3. Buscar livro\n");
+        printf("4. Editar livro\n");
+        printf("5. Ativar/Desativar livro\n");
+        printf("0. Voltar\n");
+
+        printf("\nEscolha uma opcao: ");
+        scanf("%d", &opcaoLivros);
+
+        switch(opcaoLivros){
+            case 1:
+                cadastrarLivro();
+                break;
+
+            case 2:
+                listarLivros();
+                break;
+
+            case 3:
+                printf("\nBuscar livro em desenvolvimento.\n");
+                break;
+
+            case 4:
+                printf("\nEditar livro em desenvolvimento.\n");
+                break;
+
+            case 5:
+                printf("\nAtivar/Desativar livro em desenvolvimento.\n");
+                break;
+
+            case 0:
+                printf("\nVoltando ao menu principal...\n");
+                break;
+
+            default:
+                printf("\nOpcao invalida!\n");
+        }
+
+    } while(opcaoLivros != 0);
+}
 
 void cadastrarLivro(){
 
-    char titulo[100];
-    char autor[100];
+    printf("\n=== CADASTRO DE LIVRO ===\n");
+
+    livros[totalLivros].codigo = totalLivros + 1;
 
     getchar();
 
-    printf("\n===CADASTRO DE LIVROS===\n");
+    printf("Titulo: ");
+    fgets(livros[totalLivros].titulo,
+          sizeof(livros[totalLivros].titulo),
+          stdin);
 
-    printf("Titulo: ")
-    fgets("titulo,sizeof(titulo), stdin");
+    printf("Autor: ");
+    fgets(livros[totalLivros].autor,
+          sizeof(livros[totalLivros].autor),
+          stdin);
 
-    printf("Autor: ")
-    fgets("autor,sizeof(autor), stdin");
-
-    printf("\n=== DADOS INFORMADOS ===\n");
-    printf("Titulo: %s", titulo);
-    printf("Autor: %s", autor);
+    totalLivros++;
 
     printf("\nLivro cadastrado com sucesso!\n");
+}
+
+void listarLivros(){
+
+    int i;
+
+    printf("\n=== LIVROS CADASTRADOS ===\n");
+
+    if(totalLivros == 0){
+        printf("Nenhum livro cadastrado.\n");
+        return;
+    }
+
+    for(i = 0; i < totalLivros; i++){
+
+        printf("\nCodigo: %d\n", livros[i].codigo);
+        printf("Titulo: %s", livros[i].titulo);
+        printf("Autor: %s", livros[i].autor);
+    }
 }
