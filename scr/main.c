@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <locale.h>
 
 #define MAX 100
@@ -10,14 +11,49 @@ struct Livro{
     int status;
 };
 
+struct Usuario{
+    int codigo;
+    char nome[100];
+    char cpf[16];
+    char telefone[13];
+    char email[100];
+    int status;
+};
+
+struct Emprestimo{
+    int codigo;
+    int codigoUsuario;
+    int codigoLivro;
+    int status;
+};
+
 struct Livro livros[MAX];
 int totalLivros = 0;
 
+struct Usuario usuarios[MAX];
+int totalUsuarios = 0;
+
+struct Emprestimo emprestimos[MAX];
+int totalEmprestimos = 0;
+
+//livros
 void menuLivros();
 void cadastrarLivro();
 void listarLivros();
 void buscarLivro();
 void ativarDesativarLivro();
+
+//usuarios
+void menuUsuarios();
+void cadastrarUsuario();
+void listarUsuario();
+void buscarUsuario();
+void ativarDesativarUsuario();
+
+//emprestims
+void menuEmprestimos();
+void realizarEmprestimo();
+void listarEmprestimos();
 
 int main(){
     setlocale(LC_ALL, "Portuguese");
@@ -42,7 +78,7 @@ int main(){
                 break;
 
             case 2:
-                printf("\nModulo Usuarios em desenvolvimento.\n");
+                menuUsuarios();
                 break;
 
             case 3:
@@ -112,6 +148,52 @@ void menuLivros(){
 
     } while(opcaoLivros != 0);
 }
+
+void menuUsuarios(){
+    int opcaoUsuarios;
+
+    do{
+        printf("\n=== MENU USUÁRIOS ===\n");
+        printf("1. Cadastrar usuário\n");
+        printf("2. Listar usuários\n");
+        printf("3. Buscar usuário\n");
+        printf("4. Ativar/Desativar usuário\n");
+        printf("0. voltar\n");
+
+        printf("\nEscolha uma opção: ");
+        scanf("%d", &opcaoUsuarios);
+
+        switch(opcaoUsuarios)
+        {
+            case 1:
+                cadastrarUsuario();
+                break;
+
+            case 2:
+                listarUsuario();
+                break;
+
+            case 3:
+                buscarUsuario();
+                break;
+
+            case 4:
+                ativarDesativarUsuario();
+                break;
+
+            case 0:
+                printf("\nVoltando...\n");
+                break;
+
+            default:
+                printf("\nOpcao invalida!\n");
+        }
+
+    }while(opcaoUsuarios != 0);
+}
+
+void 
+//LIVROS
 
 void cadastrarLivro(){
 
@@ -239,4 +321,170 @@ void  ativarDesativarLivro(){
     }
 
     printf("\nLivro nao encontrado.\n");
+}
+
+//USUÁRIOS
+void cadastrarUsuario()
+{
+    int i;
+    int cpfExiste = 0;
+
+    if(totalUsuarios >= MAX)
+    {
+        printf("\nLimite de usuarios atingido!\n");
+        return;
+    }
+
+    usuarios[totalUsuarios].codigo = totalUsuarios + 1;
+
+    getchar();
+
+    printf("\n=== CADASTRO DE USUARIO ===\n");
+
+    printf("Nome: ");
+    fgets(usuarios[totalUsuarios].nome,
+          sizeof(usuarios[totalUsuarios].nome),
+          stdin);
+
+    printf("CPF: ");
+    fgets(usuarios[totalUsuarios].cpf,
+          sizeof(usuarios[totalUsuarios].cpf),
+          stdin);
+
+          for(i = 0; i < totalUsuarios; i++)
+        {
+    if(strcmp(usuarios[i].cpf,usuarios[totalUsuarios].cpf) == 0){
+        cpfExiste = 1;
+        break;
+            }
+        }
+
+    if(cpfExiste == 1){
+
+    printf("\nCPF ja cadastrado!\n");
+    return;
+    }
+
+    printf("Telefone: ");
+    fgets(usuarios[totalUsuarios].telefone,
+          sizeof(usuarios[totalUsuarios].telefone),
+          stdin);
+
+    printf("Email: ");
+    fgets(usuarios[totalUsuarios].email,
+          sizeof(usuarios[totalUsuarios].email),
+          stdin);
+
+    usuarios[totalUsuarios].status = 1;
+
+    totalUsuarios++;
+
+    printf("\nUsuario cadastrado com sucesso!\n");
+}
+
+void listarUsuario()
+{
+    int i;
+
+    if(totalUsuarios == 0)
+    {
+        printf("\nNenhum usuario cadastrado.\n");
+        return;
+    }
+
+    for(i = 0; i < totalUsuarios; i++)
+    {
+        printf("\n====================\n");
+        printf("Codigo: %d\n",usuarios[i].codigo);
+        printf("Nome: %s",usuarios[i].nome);
+        printf("CPF: %s", usuarios[i].cpf);
+        printf("Telefone: %s", usuarios[i].telefone);
+        printf("Email: %s", usuarios[i].email);
+
+        printf("Status: ");
+
+        if(usuarios[i].status == 1)
+        {
+            printf("Ativo\n");
+        }
+        else
+        {
+            printf("Inativo\n");
+        }
+    }
+}
+
+void buscarUsuario(){
+
+    int i;
+    int codigoBuscado;
+    int encontrou = 0;
+
+    printf("\n=== BUSCAR USUARIO ===\n");
+
+    printf("Digite o codigo do usuario: ");
+    scanf("%d", &codigoBuscado);
+
+    for(i = 0; i < totalUsuarios; i++)
+    {
+        if(usuarios[i].codigo == codigoBuscado)
+        {
+            printf("\nUsuario encontrado!\n");
+
+            printf("Codigo: %d\n", usuarios[i].codigo);
+            printf("Nome: %s", usuarios[i].nome);
+            printf("CPF: %s", usuarios[i].cpf);
+            printf("Telefone: %s", usuarios[i].telefone);
+            printf("Email: %s", usuarios[i].email);
+
+            printf("Status: ");
+
+            if(usuarios[i].status == 1)
+            {
+                printf("Ativo\n");
+            }
+            else
+            {
+                printf("Inativo\n");
+            }
+
+            encontrou = 1;
+            break;
+        }
+    }
+
+    if(encontrou == 0)
+    {
+        printf("\nUsuario nao encontrado.\n");
+    }
+}
+
+void ativarDesativarUsuario(){
+
+    int codigo;
+    int i;
+
+    printf("\nDigite o codigo do usuario: ");
+    scanf("%d", &codigo);
+
+    for(i = 0; i < totalUsuarios; i++)
+    {
+        if(usuarios[i].codigo == codigo)
+        {
+            if(usuarios[i].status == 1)
+            {
+                usuarios[i].status = 0;
+                printf("\nUsuario inativado.\n");
+            }
+            else
+            {
+                usuarios[i].status = 1;
+                printf("\nUsuario ativado.\n");
+            }
+
+            return;
+        }
+    }
+
+    printf("\nUsuario nao encontrado.\n");
 }
