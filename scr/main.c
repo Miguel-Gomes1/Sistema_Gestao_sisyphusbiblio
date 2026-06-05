@@ -192,7 +192,9 @@ void menuUsuarios(){
     }while(opcaoUsuarios != 0);
 }
 
-void 
+void menuEmprestimos(){
+    int op
+}
 //LIVROS
 
 void cadastrarLivro(){
