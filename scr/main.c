@@ -93,7 +93,7 @@ int main(){
                 break;
 
             case 4:
-                printf("\nModulo Historico em desenvolvimento.\n");
+                menuHistorico();
                 break;
 
             case 0:
@@ -233,6 +233,47 @@ void menuEmprestimos(){
     }while(opcaoEmprestimos != 0);
     
 }
+
+void menuHistorico(){
+
+    int opcaoHistorico;
+
+    do{
+
+        printf("\n=== HISTORICO ===\n");
+        printf("1. Historico completo\n");
+        printf("2. Filtrar por usuário\n");
+        printf("3. Filtrar por livro\n");
+        printf("0. Voltar\n");
+
+        printf("\nEscolha uma opcao: ");
+        scanf("%d", &opcaoHistorico);
+
+        switch(opcaoHistorico){
+
+            case 1:
+                historicoCompleto();
+                break;
+
+            case 2:
+                historicoPorUsuario();
+                break;
+
+            case 3:
+                historicoPorLivro();
+                break;
+
+            case 0:
+                printf("\nVoltando...\n");
+                break;
+
+            default:
+                printf("\nOpcao inválida!\n");
+        }
+
+    }while(opcaoHistorico != 0);
+}
+
 //LIVROS
 
 void cadastrarLivro(){
@@ -618,4 +659,129 @@ void registrarDevolucao(){
     }
 
     printf("\nEmprestimo nao encontrado.\n");
+}
+
+void historicoCompleto(){
+    int i;
+
+    printf("\n=== HISTORICO COMPLETO ===\n");
+
+    if(totalEmprestimos == 0)
+    {
+        printf("\nNenhum emprestimo registrado.\n");
+        return;
+    }
+
+    for(i = 0; i < totalEmprestimos; i++)
+    {
+        printf("\nCodigo: %d\n",
+               emprestimos[i].codigo);
+
+        printf("Usuario: %d\n",
+               emprestimos[i].codigoUsuario);
+
+        printf("Livro: %d\n",
+               emprestimos[i].codigoLivro);
+
+        printf("Status: ");
+
+        if(emprestimos[i].status == 1)
+        {
+            printf("Ativo\n");
+        }
+        else
+        {
+            printf("Devolvido\n");
+        }
+
+        printf("------------------\n");
+    }
+}
+
+void historicoPorUsuario(){
+    int codigoUsuario;
+    int i;
+    int encontrou = 0;
+
+    printf("\n=== HISTORICO POR USUARIO ===\n");
+
+    printf("Digite o codigo do usuario: ");
+    scanf("%d", &codigoUsuario);
+
+    for(i = 0; i < totalEmprestimos; i++)
+    {
+        if(emprestimos[i].codigoUsuario == codigoUsuario)
+        {
+            printf("\nCodigo Emprestimo: %d\n",
+                   emprestimos[i].codigo);
+
+            printf("Usuario: %d\n",
+                   emprestimos[i].codigoUsuario);
+
+            printf("Livro: %d\n",
+                   emprestimos[i].codigoLivro);
+
+            printf("Status: ");
+
+            if(emprestimos[i].status == 1)
+            {
+                printf("Ativo\n");
+            }
+            else
+            {
+                printf("Devolvido\n");
+            }
+
+            encontrou = 1;
+        }
+    }
+
+    if(encontrou == 0)
+    {
+        printf("\nNenhum emprestimo encontrado para este usuario.\n");
+    }
+}
+
+void historicoPorLivro(){
+    int codigoLivro;
+    int i;
+    int encontrou = 0;
+
+    printf("\n=== HISTORICO POR LIVRO ===\n");
+
+    printf("Digite o codigo do livro: ");
+    scanf("%d", &codigoLivro);
+
+    for(i = 0; i < totalEmprestimos; i++){
+
+        if(emprestimos[i].codigoLivro == codigoLivro)
+        {
+            printf("\nCodigo Emprestimo: %d\n",
+                   emprestimos[i].codigo);
+
+            printf("Usuario: %d\n",
+                   emprestimos[i].codigoUsuario);
+
+            printf("Livro: %d\n",
+                   emprestimos[i].codigoLivro);
+
+            printf("Status: ");
+
+            if(emprestimos[i].status == 1)
+            {
+                printf("Ativo\n");
+            }
+            else
+            {
+                printf("Devolvido\n");
+            }
+
+            encontrou = 1;
+        }
+    }
+
+    if(encontrou == 0)
+    {
+        printf("\nNenhum emprestimo encontrado para este livro.\n");
+    }
 }
