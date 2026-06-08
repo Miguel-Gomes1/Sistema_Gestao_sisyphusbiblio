@@ -572,6 +572,12 @@ void ativarDesativarUsuario(){
 
 void realizarEmprestimo(){
 
+    int codigoUsuario;
+    int codigoLivro;
+    int i;
+    int usuarioExiste = 0;
+    int livroExiste = 0;
+
     if(totalEmprestimos >= MAX){
 
         printf("\nLimite de emprestimos atingido!\n");
@@ -580,14 +586,69 @@ void realizarEmprestimo(){
 
     printf("\n=== REALIZAR EMPRESTIMO ===\n");
 
-    emprestimos[totalEmprestimos].codigo = totalEmprestimos + 1;
-
     printf("Codigo do usuario: ");
-    scanf("%d", &emprestimos[totalEmprestimos].codigoUsuario);
+    scanf("%d", &codigoUsuario);
 
     printf("Codigo do livro: ");
-    scanf("%d", &emprestimos[totalEmprestimos].codigoLivro);
+    scanf("%d", &codigoLivro);
 
+    for(i = 0; i < totalUsuarios; i++)
+    {
+        if(usuarios[i].codigo == codigoUsuario)
+        {
+            usuarioExiste = 1;
+
+            if(usuarios[i].status == 0)
+            {
+                printf("\nUsuario inativo.\n");
+                return;
+            }
+
+            break;
+        }
+    }
+
+    if(usuarioExiste == 0)
+    {
+        printf("\nUsuario nao encontrado.\n");
+        return;
+    }
+
+    for(i = 0; i < totalLivros; i++)
+    {
+        if(livros[i].codigo == codigoLivro)
+        {
+            livroExiste = 1;
+
+            if(livros[i].status == 0)
+            {
+                printf("\nLivro inativo.\n");
+                return;
+            }
+
+            break;
+        }
+    }
+
+    if(livroExiste == 0)
+    {
+        printf("\nLivro nao encontrado.\n");
+        return;
+    }
+
+    for(i = 0; i < totalEmprestimos; i++)
+    {
+        if(emprestimos[i].codigoLivro == codigoLivro &&
+           emprestimos[i].status == 1)
+        {
+            printf("\nLivro ja esta emprestado.\n");
+            return;
+        }
+    }
+
+    emprestimos[totalEmprestimos].codigo = totalEmprestimos + 1;
+    emprestimos[totalEmprestimos].codigoUsuario = codigoUsuario;
+    emprestimos[totalEmprestimos].codigoLivro = codigoLivro;
     emprestimos[totalEmprestimos].status = 1;
 
     totalEmprestimos++;
@@ -596,12 +657,13 @@ void realizarEmprestimo(){
 }
 
 void listarEmprestimos(){
+
     int i;
+    int j;
 
     printf("\n=== EMPRESTIMOS CADASTRADOS ===\n");
 
     if(totalEmprestimos == 0){
-
         printf("\nNenhum emprestimo cadastrado.\n");
         return;
     }
@@ -609,23 +671,34 @@ void listarEmprestimos(){
     for(i = 0; i < totalEmprestimos; i++){
 
         printf("\n====================\n");
-        printf("Codigo de empréstimo: %d\n",
+        printf("Codigo do emprestimo: %d\n",
                emprestimos[i].codigo);
 
-        printf("Usuario: %d\n",
-               emprestimos[i].codigoUsuario);
+        for(j = 0; j < totalUsuarios; j++){
+            if(usuarios[j].codigo ==
+               emprestimos[i].codigoUsuario){
 
-        printf("Livro: %d\n",
-               emprestimos[i].codigoLivro);
+                printf("Usuario: %s",
+                       usuarios[j].nome);
+                break;
+            }
+        }
+
+        for(j = 0; j < totalLivros; j++){
+            if(livros[j].codigo ==
+               emprestimos[i].codigoLivro){
+
+                printf("Livro: %s",
+                       livros[j].titulo);
+                break;
+            }
+        }
 
         printf("Status: ");
 
         if(emprestimos[i].status == 1){
-
             printf("Ativo\n");
-        }
-        else{
-
+        }else{
             printf("Devolvido\n");
         }
     }
@@ -662,45 +735,58 @@ void registrarDevolucao(){
 }
 
 void historicoCompleto(){
+
     int i;
+    int j;
 
     printf("\n=== HISTORICO COMPLETO ===\n");
 
-    if(totalEmprestimos == 0)
-    {
+    if(totalEmprestimos == 0){
         printf("\nNenhum emprestimo registrado.\n");
         return;
     }
 
-    for(i = 0; i < totalEmprestimos; i++)
-    {
-        printf("\nCodigo: %d\n",
+    for(i = 0; i < totalEmprestimos; i++){
+
+        printf("\n====================\n");
+        printf("Codigo Emprestimo: %d\n",
                emprestimos[i].codigo);
 
-        printf("Usuario: %d\n",
-               emprestimos[i].codigoUsuario);
+        for(j = 0; j < totalUsuarios; j++){
+            if(usuarios[j].codigo ==
+               emprestimos[i].codigoUsuario){
 
-        printf("Livro: %d\n",
-               emprestimos[i].codigoLivro);
+                printf("Usuario: %s",
+                       usuarios[j].nome);
+                break;
+            }
+        }
+
+        for(j = 0; j < totalLivros; j++){
+            if(livros[j].codigo ==
+               emprestimos[i].codigoLivro){
+
+                printf("Livro: %s",
+                       livros[j].titulo);
+                break;
+            }
+        }
 
         printf("Status: ");
 
-        if(emprestimos[i].status == 1)
-        {
+        if(emprestimos[i].status == 1){
             printf("Ativo\n");
-        }
-        else
-        {
+        }else{
             printf("Devolvido\n");
         }
-
-        printf("------------------\n");
     }
 }
 
 void historicoPorUsuario(){
+
     int codigoUsuario;
     int i;
+    int j;
     int encontrou = 0;
 
     printf("\n=== HISTORICO POR USUARIO ===\n");
@@ -708,27 +794,30 @@ void historicoPorUsuario(){
     printf("Digite o codigo do usuario: ");
     scanf("%d", &codigoUsuario);
 
-    for(i = 0; i < totalEmprestimos; i++)
-    {
-        if(emprestimos[i].codigoUsuario == codigoUsuario)
-        {
-            printf("\nCodigo Emprestimo: %d\n",
+    for(i = 0; i < totalEmprestimos; i++){
+
+        if(emprestimos[i].codigoUsuario ==
+           codigoUsuario){
+
+            printf("\n====================\n");
+            printf("Codigo Emprestimo: %d\n",
                    emprestimos[i].codigo);
 
-            printf("Usuario: %d\n",
-                   emprestimos[i].codigoUsuario);
+            for(j = 0; j < totalLivros; j++){
+                if(livros[j].codigo ==
+                   emprestimos[i].codigoLivro){
 
-            printf("Livro: %d\n",
-                   emprestimos[i].codigoLivro);
+                    printf("Livro: %s",
+                           livros[j].titulo);
+                    break;
+                }
+            }
 
             printf("Status: ");
 
-            if(emprestimos[i].status == 1)
-            {
+            if(emprestimos[i].status == 1){
                 printf("Ativo\n");
-            }
-            else
-            {
+            }else{
                 printf("Devolvido\n");
             }
 
@@ -736,15 +825,16 @@ void historicoPorUsuario(){
         }
     }
 
-    if(encontrou == 0)
-    {
+    if(encontrou == 0){
         printf("\nNenhum emprestimo encontrado para este usuario.\n");
     }
 }
 
 void historicoPorLivro(){
+
     int codigoLivro;
     int i;
+    int j;
     int encontrou = 0;
 
     printf("\n=== HISTORICO POR LIVRO ===\n");
@@ -754,25 +844,28 @@ void historicoPorLivro(){
 
     for(i = 0; i < totalEmprestimos; i++){
 
-        if(emprestimos[i].codigoLivro == codigoLivro)
-        {
-            printf("\nCodigo Emprestimo: %d\n",
+        if(emprestimos[i].codigoLivro ==
+           codigoLivro){
+
+            printf("\n====================\n");
+            printf("Codigo Emprestimo: %d\n",
                    emprestimos[i].codigo);
 
-            printf("Usuario: %d\n",
-                   emprestimos[i].codigoUsuario);
+            for(j = 0; j < totalUsuarios; j++){
+                if(usuarios[j].codigo ==
+                   emprestimos[i].codigoUsuario){
 
-            printf("Livro: %d\n",
-                   emprestimos[i].codigoLivro);
+                    printf("Usuario: %s",
+                           usuarios[j].nome);
+                    break;
+                }
+            }
 
             printf("Status: ");
 
-            if(emprestimos[i].status == 1)
-            {
+            if(emprestimos[i].status == 1){
                 printf("Ativo\n");
-            }
-            else
-            {
+            }else{
                 printf("Devolvido\n");
             }
 
@@ -780,8 +873,7 @@ void historicoPorLivro(){
         }
     }
 
-    if(encontrou == 0)
-    {
+    if(encontrou == 0){
         printf("\nNenhum emprestimo encontrado para este livro.\n");
     }
 }
