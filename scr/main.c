@@ -63,8 +63,22 @@ void historicoCompleto();
 void historicoPorUsuario();
 void historicoPorLivro();
 
+//salvar arquivos
+void salvarLivros();
+void carregarLivros();
+
+void salvarUsuarios();
+void carregarUsuarios();
+
+void salvarEmprestimos();
+void carregarEmprestimos();
+
 int main(){
     setlocale(LC_ALL, "Portuguese");
+
+    carregarLivros();
+    carregarUsuarios();
+    carregarEmprestimos();
 
     int opcao;
 
@@ -97,6 +111,11 @@ int main(){
                 break;
 
             case 0:
+                salvarLivros();
+                salvarUsuarios();
+                salvarEmprestimos();
+
+                printf("\nDados salvos com sucesso!\n");
                 printf("\nEncerrando sistema...\n");
                 break;
 
@@ -876,4 +895,165 @@ void historicoPorLivro(){
     if(encontrou == 0){
         printf("\nNenhum emprestimo encontrado para este livro.\n");
     }
+}
+
+void salvarLivros(){
+
+    FILE *arquivo;
+    int i;
+
+    arquivo = fopen("livros.txt", "w");
+
+    if(arquivo == NULL){
+        printf("\nErro ao salvar livros.\n");
+        return;
+    }
+
+    fprintf(arquivo, "%d\n", totalLivros);
+
+    for(i = 0; i < totalLivros; i++){
+
+        fprintf(arquivo,
+                "%d;%s;%s;%d\n",
+                livros[i].codigo,
+                livros[i].titulo,
+                livros[i].autor,
+                livros[i].status);
+    }
+
+    fclose(arquivo);
+}
+
+void carregarLivros(){
+
+    FILE *arquivo;
+    int i;
+
+    arquivo = fopen("livros.txt", "r");
+
+    if(arquivo == NULL){
+        return;
+    }
+
+    fscanf(arquivo, "%d\n", &totalLivros);
+
+    for(i = 0; i < totalLivros; i++){
+
+        fscanf(arquivo,
+               "%d;%199[^;];%99[^;];%d\n",
+               &livros[i].codigo,
+               livros[i].titulo,
+               livros[i].autor,
+               &livros[i].status);
+    }
+
+    fclose(arquivo);
+}
+
+void salvarUsuarios(){
+
+    FILE *arquivo;
+    int i;
+
+    arquivo = fopen("usuarios.txt", "w");
+
+    if(arquivo == NULL){
+        return;
+    }
+
+    fprintf(arquivo, "%d\n", totalUsuarios);
+
+    for(i = 0; i < totalUsuarios; i++){
+
+        fprintf(arquivo,
+                "%d;%s;%s;%s;%s;%d\n",
+                usuarios[i].codigo,
+                usuarios[i].nome,
+                usuarios[i].cpf,
+                usuarios[i].telefone,
+                usuarios[i].email,
+                usuarios[i].status);
+    }
+
+    fclose(arquivo);
+}
+
+void carregarUsuarios(){
+
+    FILE *arquivo;
+    int i;
+
+    arquivo = fopen("usuarios.txt", "r");
+
+    if(arquivo == NULL){
+        return;
+    }
+
+    fscanf(arquivo, "%d\n", &totalUsuarios);
+
+    for(i = 0; i < totalUsuarios; i++){
+
+        fscanf(arquivo,
+               "%d;%99[^;];%19[^;];%19[^;];%99[^;];%d\n",
+               &usuarios[i].codigo,
+               usuarios[i].nome,
+               usuarios[i].cpf,
+               usuarios[i].telefone,
+               usuarios[i].email,
+               &usuarios[i].status);
+    }
+
+    fclose(arquivo);
+}
+
+void salvarEmprestimos(){
+
+    FILE *arquivo;
+    int i;
+
+    arquivo = fopen("emprestimos.txt", "w");
+
+    if(arquivo == NULL){
+        return;
+    }
+
+    fprintf(arquivo, "%d\n", totalEmprestimos);
+
+    for(i = 0; i < totalEmprestimos; i++){
+
+        fprintf(arquivo,
+                "%d;%d;%d;%d\n",
+                emprestimos[i].codigo,
+                emprestimos[i].codigoUsuario,
+                emprestimos[i].codigoLivro,
+                emprestimos[i].status);
+    }
+
+    fclose(arquivo);
+}
+
+void carregarEmprestimos(){
+
+    FILE *arquivo;
+    int i;
+
+    arquivo = fopen("emprestimos.txt", "r");
+
+    if(arquivo == NULL){
+        return;
+    }
+
+    fscanf(arquivo, "%d\n", &totalEmprestimos);
+
+    for(i = 0; i < totalEmprestimos; i++){
+
+        fscanf(arquivo,
+               "%d;%d;%d;%d\n",
+               &emprestimos[i].codigo,
+               &emprestimos[i].codigoUsuario,
+               &emprestimos[i].codigoLivro,
+               &emprestimos[i].status);
+    }
+
+    fclose(arquivo);
 }
