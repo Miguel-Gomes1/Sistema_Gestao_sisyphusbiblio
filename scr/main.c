@@ -25,6 +25,7 @@ struct Emprestimo{
     int codigoUsuario;
     int codigoLivro;
     int status;
+    float multa;
 };
 
 struct Livro livros[MAX];
@@ -669,7 +670,7 @@ void realizarEmprestimo(){
     emprestimos[totalEmprestimos].codigoUsuario = codigoUsuario;
     emprestimos[totalEmprestimos].codigoLivro = codigoLivro;
     emprestimos[totalEmprestimos].status = 1;
-
+    emprestimos[totalEmprestimos].multa = 0;
     totalEmprestimos++;
 
     printf("\nEmprestimo registrado com sucesso!\n");
@@ -724,8 +725,8 @@ void listarEmprestimos(){
 }
 
 void registrarDevolucao(){
-
     int codigoEmprestimo;
+    int diasAtraso;
     int i;
 
     printf("\n=== REGISTRAR DEVOLUCAO ===\n");
@@ -741,6 +742,22 @@ void registrarDevolucao(){
 
                 printf("\nEste emprestimo ja foi devolvido.\n");
                 return;
+            }
+
+            printf("Dias de atraso: ");
+            scanf("%d", &diasAtraso);
+
+            if(diasAtraso > 0){
+
+                emprestimos[i].multa =
+                    diasAtraso * 3.00;
+
+                printf("\nMulta gerada: R$ %.2f\n",
+                       emprestimos[i].multa);
+            }
+            else{
+
+                emprestimos[i].multa = 0;
             }
 
             emprestimos[i].status = 0;
@@ -798,6 +815,8 @@ void historicoCompleto(){
         }else{
             printf("Devolvido\n");
         }
+        printf("Multa: R$ %.2f\n",
+        emprestimos[i].multa);
     }
 }
 
