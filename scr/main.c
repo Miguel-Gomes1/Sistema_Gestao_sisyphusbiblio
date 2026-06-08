@@ -14,8 +14,8 @@ struct Livro{
 struct Usuario{
     int codigo;
     char nome[100];
-    char cpf[16];
-    char telefone[13];
+    char cpf[20];
+    char telefone[20];
     char email[100];
     int status;
 };
@@ -50,10 +50,18 @@ void listarUsuario();
 void buscarUsuario();
 void ativarDesativarUsuario();
 
-//emprestims
+//emprestims e devoluções
 void menuEmprestimos();
 void realizarEmprestimo();
 void listarEmprestimos();
+void menuDevolucoes();
+void registrarDevolucao();
+
+//listagem geral sobre tudo
+void menuHistorico();
+void historicoCompleto();
+void historicoPorUsuario();
+void historicoPorLivro();
 
 int main(){
     setlocale(LC_ALL, "Portuguese");
@@ -65,8 +73,7 @@ int main(){
         printf("1. Livros\n");
         printf("2. Usuários\n");
         printf("3. Empréstimos\n");
-        printf("4. Devoluções\n");
-        printf("5. Histórico\n");
+        printf("4. Histórico\n");
         printf("0. Sair\n");
 
         printf("\nEscolha uma opcao: ");
@@ -82,14 +89,10 @@ int main(){
                 break;
 
             case 3:
-                printf("\nModulo Emprestimos em desenvolvimento.\n");
+                menuEmprestimos();
                 break;
 
             case 4:
-                printf("\nModulo Devolucoes em desenvolvimento.\n");
-                break;
-
-            case 5:
                 printf("\nModulo Historico em desenvolvimento.\n");
                 break;
 
@@ -186,14 +189,49 @@ void menuUsuarios(){
                 break;
 
             default:
-                printf("\nOpcao invalida!\n");
+                printf("\nOpcao inválida!\n");
         }
 
     }while(opcaoUsuarios != 0);
 }
 
 void menuEmprestimos(){
-    int op
+    int opcaoEmprestimos;
+
+    do{
+        printf("\n=== MENU EMPRÉSTIMOS ===\n");
+        printf("1. Realizar empréstimo\n");
+        printf("2. Listar empréstimos\n");
+        printf("3. Realizar devolução\n");
+        printf("0. Voltar\n");
+
+        printf("\nEscolha uma opção: ");
+        scanf("%d", &opcaoEmprestimos);
+
+        switch(opcaoEmprestimos)
+        {
+            case 1:
+                realizarEmprestimo();
+                break;
+
+            case 2:
+                listarEmprestimos();
+                break;
+
+            case 3:
+                registrarDevolucao();
+                break;
+
+            case 0:
+                printf("\nVoltando...\n");
+                break;
+
+            default:
+                printf("\nOpcao inválida!\n");
+        }
+
+    }while(opcaoEmprestimos != 0);
+    
 }
 //LIVROS
 
@@ -469,17 +507,17 @@ void ativarDesativarUsuario(){
     printf("\nDigite o codigo do usuario: ");
     scanf("%d", &codigo);
 
-    for(i = 0; i < totalUsuarios; i++)
-    {
-        if(usuarios[i].codigo == codigo)
-        {
-            if(usuarios[i].status == 1)
-            {
+    for(i = 0; i < totalUsuarios; i++){
+
+        if(usuarios[i].codigo == codigo){
+
+            if(usuarios[i].status == 1){
+
                 usuarios[i].status = 0;
                 printf("\nUsuario inativado.\n");
             }
-            else
-            {
+            else{
+
                 usuarios[i].status = 1;
                 printf("\nUsuario ativado.\n");
             }
@@ -489,4 +527,95 @@ void ativarDesativarUsuario(){
     }
 
     printf("\nUsuario nao encontrado.\n");
+}
+
+void realizarEmprestimo(){
+
+    if(totalEmprestimos >= MAX){
+
+        printf("\nLimite de emprestimos atingido!\n");
+        return;
+    }
+
+    printf("\n=== REALIZAR EMPRESTIMO ===\n");
+
+    emprestimos[totalEmprestimos].codigo = totalEmprestimos + 1;
+
+    printf("Codigo do usuario: ");
+    scanf("%d", &emprestimos[totalEmprestimos].codigoUsuario);
+
+    printf("Codigo do livro: ");
+    scanf("%d", &emprestimos[totalEmprestimos].codigoLivro);
+
+    emprestimos[totalEmprestimos].status = 1;
+
+    totalEmprestimos++;
+
+    printf("\nEmprestimo registrado com sucesso!\n");
+}
+
+void listarEmprestimos(){
+    int i;
+
+    printf("\n=== EMPRESTIMOS CADASTRADOS ===\n");
+
+    if(totalEmprestimos == 0){
+
+        printf("\nNenhum emprestimo cadastrado.\n");
+        return;
+    }
+
+    for(i = 0; i < totalEmprestimos; i++){
+
+        printf("\n====================\n");
+        printf("Codigo de empréstimo: %d\n",
+               emprestimos[i].codigo);
+
+        printf("Usuario: %d\n",
+               emprestimos[i].codigoUsuario);
+
+        printf("Livro: %d\n",
+               emprestimos[i].codigoLivro);
+
+        printf("Status: ");
+
+        if(emprestimos[i].status == 1){
+
+            printf("Ativo\n");
+        }
+        else{
+
+            printf("Devolvido\n");
+        }
+    }
+}
+
+void registrarDevolucao(){
+
+    int codigoEmprestimo;
+    int i;
+
+    printf("\n=== REGISTRAR DEVOLUCAO ===\n");
+
+    printf("Digite o codigo do emprestimo: ");
+    scanf("%d", &codigoEmprestimo);
+
+    for(i = 0; i < totalEmprestimos; i++){
+
+        if(emprestimos[i].codigo == codigoEmprestimo){
+
+            if(emprestimos[i].status == 0){
+
+                printf("\nEste emprestimo ja foi devolvido.\n");
+                return;
+            }
+
+            emprestimos[i].status = 0;
+
+            printf("\nDevolucao registrada com sucesso!\n");
+            return;
+        }
+    }
+
+    printf("\nEmprestimo nao encontrado.\n");
 }
