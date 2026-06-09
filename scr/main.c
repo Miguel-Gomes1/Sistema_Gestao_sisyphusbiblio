@@ -721,6 +721,7 @@ void listarEmprestimos(){
         }else{
             printf("Devolvido\n");
         }
+        printf("Multa: R$ %.2f\n",emprestimos[i].multa);
     }
 }
 
@@ -752,8 +753,7 @@ void registrarDevolucao(){
                 emprestimos[i].multa =
                     diasAtraso * 3.00;
 
-                printf("\nMulta gerada: R$ %.2f\n",
-                       emprestimos[i].multa);
+                printf("\nMulta gerada: R$ %.2f\n",emprestimos[i].multa);
             }
             else{
 
@@ -815,8 +815,7 @@ void historicoCompleto(){
         }else{
             printf("Devolvido\n");
         }
-        printf("Multa: R$ %.2f\n",
-        emprestimos[i].multa);
+        printf("Multa: R$ %.2f\n",emprestimos[i].multa);
     }
 }
 
@@ -921,7 +920,7 @@ void salvarLivros(){
     FILE *arquivo;
     int i;
 
-    arquivo = fopen("livros.txt", "w");
+    arquivo = fopen("data/livros.txt", "w");
 
     if(arquivo == NULL){
         printf("\nErro ao salvar livros.\n");
@@ -948,7 +947,7 @@ void carregarLivros(){
     FILE *arquivo;
     int i;
 
-    arquivo = fopen("livros.txt", "r");
+    arquivo = fopen("data/livros.txt", "r");
 
     if(arquivo == NULL){
         return;
@@ -974,7 +973,7 @@ void salvarUsuarios(){
     FILE *arquivo;
     int i;
 
-    arquivo = fopen("usuarios.txt", "w");
+    arquivo = fopen("data/usuarios.txt", "w");
 
     if(arquivo == NULL){
         return;
@@ -1002,7 +1001,7 @@ void carregarUsuarios(){
     FILE *arquivo;
     int i;
 
-    arquivo = fopen("usuarios.txt", "r");
+    arquivo = fopen("data/usuarios.txt", "r");
 
     if(arquivo == NULL){
         return;
@@ -1030,7 +1029,7 @@ void salvarEmprestimos(){
     FILE *arquivo;
     int i;
 
-    arquivo = fopen("emprestimos.txt", "w");
+    arquivo = fopen("data/emprestimos.txt", "w");
 
     if(arquivo == NULL){
         return;
@@ -1056,7 +1055,7 @@ void carregarEmprestimos(){
     FILE *arquivo;
     int i;
 
-    arquivo = fopen("emprestimos.txt", "r");
+    arquivo = fopen("data/emprestimos.txt", "r");
 
     if(arquivo == NULL){
         return;
