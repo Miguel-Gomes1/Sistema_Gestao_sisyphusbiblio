@@ -130,7 +130,7 @@ SisyphusBiblio/
 │
 ├── docs/
 │   ├── levantamento_requisitos.pdf
-│   └── diagramas
+│   └── documentação
 │
 └── README.md
 ```
