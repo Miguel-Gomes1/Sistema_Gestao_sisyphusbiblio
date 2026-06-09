@@ -1,17 +1,20 @@
 #include <stdio.h>
+#include <time.h>
 #include <string.h>
 #include <locale.h>
 
 #define MAX 100
 
-struct Livro{
+struct Livro
+{
     int codigo;
     char titulo[200];
     char autor[100];
     int status;
 };
 
-struct Usuario{
+struct Usuario
+{
     int codigo;
     char nome[100];
     char cpf[20];
@@ -20,11 +23,13 @@ struct Usuario{
     int status;
 };
 
-struct Emprestimo{
+struct Emprestimo
+{
     int codigo;
     int codigoUsuario;
     int codigoLivro;
     int status;
+    int diasEmprestimos;
     float multa;
 };
 
@@ -37,34 +42,28 @@ int totalUsuarios = 0;
 struct Emprestimo emprestimos[MAX];
 int totalEmprestimos = 0;
 
-//livros
+// livros
 void menuLivros();
 void cadastrarLivro();
 void listarLivros();
 void buscarLivro();
 void ativarDesativarLivro();
 
-//usuarios
+// usuarios
 void menuUsuarios();
 void cadastrarUsuario();
 void listarUsuario();
 void buscarUsuario();
 void ativarDesativarUsuario();
 
-//emprestims e devoluções
+// emprestims e devoluções
 void menuEmprestimos();
 void realizarEmprestimo();
 void listarEmprestimos();
 void menuDevolucoes();
 void registrarDevolucao();
 
-//listagem geral sobre tudo
-void menuHistorico();
-void historicoCompleto();
-void historicoPorUsuario();
-void historicoPorLivro();
-
-//salvar arquivos
+// salvar arquivos
 void salvarLivros();
 void carregarLivros();
 
@@ -74,7 +73,8 @@ void carregarUsuarios();
 void salvarEmprestimos();
 void carregarEmprestimos();
 
-int main(){
+int main()
+{
     setlocale(LC_ALL, "Portuguese");
 
     carregarLivros();
@@ -83,57 +83,56 @@ int main(){
 
     int opcao;
 
-    do{
+    do
+    {
         printf("\n=== SISIPHUSBIBLIO ===\n");
         printf("1. Livros\n");
         printf("2. Usuários\n");
         printf("3. Empréstimos\n");
-        printf("4. Histórico\n");
         printf("0. Sair\n");
 
         printf("\nEscolha uma opcao: ");
         scanf("%d", &opcao);
 
-        switch(opcao){
-            case 1:
-                menuLivros();
-                break;
+        switch (opcao)
+        {
+        case 1:
+            menuLivros();
+            break;
 
-            case 2:
-                menuUsuarios();
-                break;
+        case 2:
+            menuUsuarios();
+            break;
 
-            case 3:
-                menuEmprestimos();
-                break;
+        case 3:
+            menuEmprestimos();
+            break;
 
-            case 4:
-                menuHistorico();
-                break;
+        case 0:
+            salvarLivros();
+            salvarUsuarios();
+            salvarEmprestimos();
 
-            case 0:
-                salvarLivros();
-                salvarUsuarios();
-                salvarEmprestimos();
+            printf("\nDados salvos com sucesso!\n");
+            printf("\nEncerrando sistema...\n");
+            break;
 
-                printf("\nDados salvos com sucesso!\n");
-                printf("\nEncerrando sistema...\n");
-                break;
-
-            default:
-                printf("\nOpcao invalida!\n");
+        default:
+            printf("\nOpcao invalida!\n");
         }
 
-    } while(opcao != 0);
+    } while (opcao != 0);
 
     return 0;
 }
 
-void menuLivros(){
+void menuLivros()
+{
 
     int opcaoLivros;
 
-    do{
+    do
+    {
         printf("\n=== MENU LIVROS ===\n");
         printf("1. Cadastrar livro\n");
         printf("2. Listar livros\n");
@@ -144,38 +143,41 @@ void menuLivros(){
         printf("\nEscolha uma opcao: ");
         scanf("%d", &opcaoLivros);
 
-        switch(opcaoLivros){
-            case 1:
-                cadastrarLivro();
-                break;
+        switch (opcaoLivros)
+        {
+        case 1:
+            cadastrarLivro();
+            break;
 
-            case 2:
-                listarLivros();
-                break;
+        case 2:
+            listarLivros();
+            break;
 
-            case 3:
-                buscarLivro();
-                break;
+        case 3:
+            buscarLivro();
+            break;
 
-            case 4:
-                ativarDesativarLivro();
-                break;
+        case 4:
+            ativarDesativarLivro();
+            break;
 
-            case 0:
-                printf("\nVoltando ao menu principal...\n");
-                break;
+        case 0:
+            printf("\nVoltando ao menu principal...\n");
+            break;
 
-            default:
-                printf("\nOpcao invalida!\n");
+        default:
+            printf("\nOpcao invalida!\n");
         }
 
-    } while(opcaoLivros != 0);
+    } while (opcaoLivros != 0);
 }
 
-void menuUsuarios(){
+void menuUsuarios()
+{
     int opcaoUsuarios;
 
-    do{
+    do
+    {
         printf("\n=== MENU USUÁRIOS ===\n");
         printf("1. Cadastrar usuário\n");
         printf("2. Listar usuários\n");
@@ -186,39 +188,41 @@ void menuUsuarios(){
         printf("\nEscolha uma opção: ");
         scanf("%d", &opcaoUsuarios);
 
-        switch(opcaoUsuarios)
+        switch (opcaoUsuarios)
         {
-            case 1:
-                cadastrarUsuario();
-                break;
+        case 1:
+            cadastrarUsuario();
+            break;
 
-            case 2:
-                listarUsuario();
-                break;
+        case 2:
+            listarUsuario();
+            break;
 
-            case 3:
-                buscarUsuario();
-                break;
+        case 3:
+            buscarUsuario();
+            break;
 
-            case 4:
-                ativarDesativarUsuario();
-                break;
+        case 4:
+            ativarDesativarUsuario();
+            break;
 
-            case 0:
-                printf("\nVoltando...\n");
-                break;
+        case 0:
+            printf("\nVoltando...\n");
+            break;
 
-            default:
-                printf("\nOpcao inválida!\n");
+        default:
+            printf("\nOpcao inválida!\n");
         }
 
-    }while(opcaoUsuarios != 0);
+    } while (opcaoUsuarios != 0);
 }
 
-void menuEmprestimos(){
+void menuEmprestimos()
+{
     int opcaoEmprestimos;
 
-    do{
+    do
+    {
         printf("\n=== MENU EMPRÉSTIMOS ===\n");
         printf("1. Realizar empréstimo\n");
         printf("2. Listar empréstimos\n");
@@ -228,77 +232,38 @@ void menuEmprestimos(){
         printf("\nEscolha uma opção: ");
         scanf("%d", &opcaoEmprestimos);
 
-        switch(opcaoEmprestimos)
+        switch (opcaoEmprestimos)
         {
-            case 1:
-                realizarEmprestimo();
-                break;
+        case 1:
+            realizarEmprestimo();
+            break;
 
-            case 2:
-                listarEmprestimos();
-                break;
+        case 2:
+            listarEmprestimos();
+            break;
 
-            case 3:
-                registrarDevolucao();
-                break;
+        case 3:
+            registrarDevolucao();
+            break;
 
-            case 0:
-                printf("\nVoltando...\n");
-                break;
+        case 0:
+            printf("\nVoltando...\n");
+            break;
 
-            default:
-                printf("\nOpcao inválida!\n");
+        default:
+            printf("\nOpcao inválida!\n");
         }
 
-    }while(opcaoEmprestimos != 0);
-    
+    } while (opcaoEmprestimos != 0);
 }
 
-void menuHistorico(){
+// LIVROS
 
-    int opcaoHistorico;
+void cadastrarLivro()
+{
 
-    do{
-
-        printf("\n=== HISTORICO ===\n");
-        printf("1. Historico completo\n");
-        printf("2. Filtrar por usuário\n");
-        printf("3. Filtrar por livro\n");
-        printf("0. Voltar\n");
-
-        printf("\nEscolha uma opcao: ");
-        scanf("%d", &opcaoHistorico);
-
-        switch(opcaoHistorico){
-
-            case 1:
-                historicoCompleto();
-                break;
-
-            case 2:
-                historicoPorUsuario();
-                break;
-
-            case 3:
-                historicoPorLivro();
-                break;
-
-            case 0:
-                printf("\nVoltando...\n");
-                break;
-
-            default:
-                printf("\nOpcao inválida!\n");
-        }
-
-    }while(opcaoHistorico != 0);
-}
-
-//LIVROS
-
-void cadastrarLivro(){
-
-    if(totalLivros >= MAX){
+    if (totalLivros >= MAX)
+    {
         printf("\nLimite de livros atingido!!!!\n");
         return;
     }
@@ -317,25 +282,28 @@ void cadastrarLivro(){
     printf("Autor: ");
     fgets(livros[totalLivros].autor,
           sizeof(livros[totalLivros].autor),
-        stdin);
+          stdin);
     livros[totalLivros].status = 1;
     totalLivros++;
 
     printf("\nLivro cadastrado com sucesso!\n");
 }
 
-void listarLivros(){
+void listarLivros()
+{
 
     int i;
 
     printf("\n=== LIVROS CADASTRADOS ===\n");
 
-    if(totalLivros == 0){
+    if (totalLivros == 0)
+    {
         printf("Nenhum livro cadastrado.\n");
         return;
     }
 
-    for(i = 0; i < totalLivros; i++){
+    for (i = 0; i < totalLivros; i++)
+    {
 
         printf("\n---------------------------");
         printf("\nCodigo: %d\n", livros[i].codigo);
@@ -343,28 +311,31 @@ void listarLivros(){
         printf("Autor: %s", livros[i].autor);
         printf("Status: ");
 
-        if(livros[i].status == 1)
+        if (livros[i].status == 1)
         {
-        printf("Ativo\n");
-        }else{
-        printf("Inativo\n");
-            }
+            printf("Ativo\n");
+        }
+        else
+        {
+            printf("Inativo\n");
+        }
     }
 }
 
-void buscarLivro(){
+void buscarLivro()
+{
     int i;
     int codigoBuscado;
     int encontrou = 0;
 
     printf("\n=== Buscar Livro ===\n");
-    
+
     printf("Digite o código do livro: ");
     scanf("%d", &codigoBuscado);
 
-    for(i = 0; i < totalLivros; i++)
+    for (i = 0; i < totalLivros; i++)
     {
-        if(livros[i].codigo == codigoBuscado)
+        if (livros[i].codigo == codigoBuscado)
         {
             printf("\nLivro encontrado!\n");
 
@@ -374,7 +345,7 @@ void buscarLivro(){
 
             printf("Status: ");
 
-            if(livros[i].status == 1)
+            if (livros[i].status == 1)
             {
                 printf("Ativo\n");
             }
@@ -388,25 +359,25 @@ void buscarLivro(){
         }
     }
 
-    if(encontrou == 0)
+    if (encontrou == 0)
     {
         printf("\nLivro nao encontrado.\n");
     }
 }
 
-
-void  ativarDesativarLivro(){
+void ativarDesativarLivro()
+{
     int codigo;
-    int i; 
+    int i;
 
     printf("\nDigite o código do livro: ");
     scanf("%d", &codigo);
 
-    for(i = 0; i < totalLivros; i++)
+    for (i = 0; i < totalLivros; i++)
     {
-        if(livros[i].codigo == codigo)
+        if (livros[i].codigo == codigo)
         {
-        if(livros[i].status == 1)
+            if (livros[i].status == 1)
             {
                 livros[i].status = 0;
                 printf("\nLivro inativado.\n");
@@ -424,13 +395,13 @@ void  ativarDesativarLivro(){
     printf("\nLivro nao encontrado.\n");
 }
 
-//USUÁRIOS
+// USUÁRIOS
 void cadastrarUsuario()
 {
     int i;
     int cpfExiste = 0;
 
-    if(totalUsuarios >= MAX)
+    if (totalUsuarios >= MAX)
     {
         printf("\nLimite de usuarios atingido!\n");
         return;
@@ -452,18 +423,20 @@ void cadastrarUsuario()
           sizeof(usuarios[totalUsuarios].cpf),
           stdin);
 
-          for(i = 0; i < totalUsuarios; i++)
+    for (i = 0; i < totalUsuarios; i++)
+    {
+        if (strcmp(usuarios[i].cpf, usuarios[totalUsuarios].cpf) == 0)
         {
-    if(strcmp(usuarios[i].cpf,usuarios[totalUsuarios].cpf) == 0){
-        cpfExiste = 1;
-        break;
-            }
+            cpfExiste = 1;
+            break;
         }
+    }
 
-    if(cpfExiste == 1){
+    if (cpfExiste == 1)
+    {
 
-    printf("\nCPF ja cadastrado!\n");
-    return;
+        printf("\nCPF ja cadastrado!\n");
+        return;
     }
 
     printf("Telefone: ");
@@ -487,24 +460,24 @@ void listarUsuario()
 {
     int i;
 
-    if(totalUsuarios == 0)
+    if (totalUsuarios == 0)
     {
         printf("\nNenhum usuario cadastrado.\n");
         return;
     }
 
-    for(i = 0; i < totalUsuarios; i++)
+    for (i = 0; i < totalUsuarios; i++)
     {
         printf("\n====================\n");
-        printf("Codigo: %d\n",usuarios[i].codigo);
-        printf("Nome: %s",usuarios[i].nome);
+        printf("Codigo: %d\n", usuarios[i].codigo);
+        printf("Nome: %s", usuarios[i].nome);
         printf("CPF: %s", usuarios[i].cpf);
         printf("Telefone: %s", usuarios[i].telefone);
         printf("Email: %s", usuarios[i].email);
 
         printf("Status: ");
 
-        if(usuarios[i].status == 1)
+        if (usuarios[i].status == 1)
         {
             printf("Ativo\n");
         }
@@ -515,7 +488,8 @@ void listarUsuario()
     }
 }
 
-void buscarUsuario(){
+void buscarUsuario()
+{
 
     int i;
     int codigoBuscado;
@@ -526,9 +500,9 @@ void buscarUsuario(){
     printf("Digite o codigo do usuario: ");
     scanf("%d", &codigoBuscado);
 
-    for(i = 0; i < totalUsuarios; i++)
+    for (i = 0; i < totalUsuarios; i++)
     {
-        if(usuarios[i].codigo == codigoBuscado)
+        if (usuarios[i].codigo == codigoBuscado)
         {
             printf("\nUsuario encontrado!\n");
 
@@ -540,7 +514,7 @@ void buscarUsuario(){
 
             printf("Status: ");
 
-            if(usuarios[i].status == 1)
+            if (usuarios[i].status == 1)
             {
                 printf("Ativo\n");
             }
@@ -554,13 +528,14 @@ void buscarUsuario(){
         }
     }
 
-    if(encontrou == 0)
+    if (encontrou == 0)
     {
         printf("\nUsuario nao encontrado.\n");
     }
 }
 
-void ativarDesativarUsuario(){
+void ativarDesativarUsuario()
+{
 
     int codigo;
     int i;
@@ -568,16 +543,20 @@ void ativarDesativarUsuario(){
     printf("\nDigite o codigo do usuario: ");
     scanf("%d", &codigo);
 
-    for(i = 0; i < totalUsuarios; i++){
+    for (i = 0; i < totalUsuarios; i++)
+    {
 
-        if(usuarios[i].codigo == codigo){
+        if (usuarios[i].codigo == codigo)
+        {
 
-            if(usuarios[i].status == 1){
+            if (usuarios[i].status == 1)
+            {
 
                 usuarios[i].status = 0;
                 printf("\nUsuario inativado.\n");
             }
-            else{
+            else
+            {
 
                 usuarios[i].status = 1;
                 printf("\nUsuario ativado.\n");
@@ -590,7 +569,8 @@ void ativarDesativarUsuario(){
     printf("\nUsuario nao encontrado.\n");
 }
 
-void realizarEmprestimo(){
+void realizarEmprestimo()
+{
 
     int codigoUsuario;
     int codigoLivro;
@@ -598,7 +578,8 @@ void realizarEmprestimo(){
     int usuarioExiste = 0;
     int livroExiste = 0;
 
-    if(totalEmprestimos >= MAX){
+    if (totalEmprestimos >= MAX)
+    {
 
         printf("\nLimite de emprestimos atingido!\n");
         return;
@@ -612,13 +593,13 @@ void realizarEmprestimo(){
     printf("Codigo do livro: ");
     scanf("%d", &codigoLivro);
 
-    for(i = 0; i < totalUsuarios; i++)
+    for (i = 0; i < totalUsuarios; i++)
     {
-        if(usuarios[i].codigo == codigoUsuario)
+        if (usuarios[i].codigo == codigoUsuario)
         {
             usuarioExiste = 1;
 
-            if(usuarios[i].status == 0)
+            if (usuarios[i].status == 0)
             {
                 printf("\nUsuario inativo.\n");
                 return;
@@ -628,19 +609,19 @@ void realizarEmprestimo(){
         }
     }
 
-    if(usuarioExiste == 0)
+    if (usuarioExiste == 0)
     {
         printf("\nUsuario nao encontrado.\n");
         return;
     }
 
-    for(i = 0; i < totalLivros; i++)
+    for (i = 0; i < totalLivros; i++)
     {
-        if(livros[i].codigo == codigoLivro)
+        if (livros[i].codigo == codigoLivro)
         {
             livroExiste = 1;
 
-            if(livros[i].status == 0)
+            if (livros[i].status == 0)
             {
                 printf("\nLivro inativo.\n");
                 return;
@@ -650,16 +631,21 @@ void realizarEmprestimo(){
         }
     }
 
-    if(livroExiste == 0)
+    if (livroExiste == 0)
     {
         printf("\nLivro nao encontrado.\n");
         return;
     }
 
-    for(i = 0; i < totalEmprestimos; i++)
+    time_t t = time(NULL);
+    struct tm *data = localtime(&t);
+
+    emprestimos[totalEmprestimos].diasEmprestimos = data->tm_yday;
+
+    for (i = 0; i < totalEmprestimos; i++)
     {
-        if(emprestimos[i].codigoLivro == codigoLivro &&
-           emprestimos[i].status == 1)
+        if (emprestimos[i].codigoLivro == codigoLivro &&
+            emprestimos[i].status == 1)
         {
             printf("\nLivro ja esta emprestado.\n");
             return;
@@ -676,27 +662,32 @@ void realizarEmprestimo(){
     printf("\nEmprestimo registrado com sucesso!\n");
 }
 
-void listarEmprestimos(){
+void listarEmprestimos()
+{
 
     int i;
     int j;
 
     printf("\n=== EMPRESTIMOS CADASTRADOS ===\n");
 
-    if(totalEmprestimos == 0){
+    if (totalEmprestimos == 0)
+    {
         printf("\nNenhum emprestimo cadastrado.\n");
         return;
     }
 
-    for(i = 0; i < totalEmprestimos; i++){
+    for (i = 0; i < totalEmprestimos; i++)
+    {
 
         printf("\n====================\n");
         printf("Codigo do emprestimo: %d\n",
                emprestimos[i].codigo);
 
-        for(j = 0; j < totalUsuarios; j++){
-            if(usuarios[j].codigo ==
-               emprestimos[i].codigoUsuario){
+        for (j = 0; j < totalUsuarios; j++)
+        {
+            if (usuarios[j].codigo ==
+                emprestimos[i].codigoUsuario)
+            {
 
                 printf("Usuario: %s",
                        usuarios[j].nome);
@@ -704,9 +695,11 @@ void listarEmprestimos(){
             }
         }
 
-        for(j = 0; j < totalLivros; j++){
-            if(livros[j].codigo ==
-               emprestimos[i].codigoLivro){
+        for (j = 0; j < totalLivros; j++)
+        {
+            if (livros[j].codigo ==
+                emprestimos[i].codigoLivro)
+            {
 
                 printf("Livro: %s",
                        livros[j].titulo);
@@ -716,16 +709,21 @@ void listarEmprestimos(){
 
         printf("Status: ");
 
-        if(emprestimos[i].status == 1){
+        if (emprestimos[i].status == 1)
+        {
             printf("Ativo\n");
-        }else{
+        }
+        else
+        {
             printf("Devolvido\n");
         }
-        printf("Multa: R$ %.2f\n",emprestimos[i].multa);
+        printf("Multa: R$ %.2f\n", emprestimos[i].multa);
     }
 }
 
-void registrarDevolucao(){
+void registrarDevolucao()
+{
+
     int codigoEmprestimo;
     int diasAtraso;
     int i;
@@ -735,27 +733,41 @@ void registrarDevolucao(){
     printf("Digite o codigo do emprestimo: ");
     scanf("%d", &codigoEmprestimo);
 
-    for(i = 0; i < totalEmprestimos; i++){
+    for (i = 0; i < totalEmprestimos; i++)
+    {
 
-        if(emprestimos[i].codigo == codigoEmprestimo){
+        if (emprestimos[i].codigo == codigoEmprestimo)
+        {
 
-            if(emprestimos[i].status == 0){
+            if (emprestimos[i].status == 0)
+            {
 
                 printf("\nEste emprestimo ja foi devolvido.\n");
                 return;
             }
 
-            printf("Dias de atraso: ");
-            scanf("%d", &diasAtraso);
+            time_t t = time(NULL);
+            struct tm *data = localtime(&t);
 
-            if(diasAtraso > 0){
+            int diaAtual = data->tm_yday;
 
-                emprestimos[i].multa =
-                    diasAtraso * 3.00;
+            int diasEmprestado =
+                diaAtual - emprestimos[i].diasEmprestimos;
 
-                printf("\nMulta gerada: R$ %.2f\n",emprestimos[i].multa);
+            int prazo = 7;
+
+            int diasAtraso =
+                diasEmprestado - prazo;
+
+            if (diasAtraso > 0)
+            {
+
+                emprestimos[i].multa = diasAtraso * 3.00;
+
+                printf("\nMulta gerada: R$ %.2f\n", emprestimos[i].multa);
             }
-            else{
+            else
+            {
 
                 emprestimos[i].multa = 0;
             }
@@ -770,166 +782,24 @@ void registrarDevolucao(){
     printf("\nEmprestimo nao encontrado.\n");
 }
 
-void historicoCompleto(){
-
-    int i;
-    int j;
-
-    printf("\n=== HISTORICO COMPLETO ===\n");
-
-    if(totalEmprestimos == 0){
-        printf("\nNenhum emprestimo registrado.\n");
-        return;
-    }
-
-    for(i = 0; i < totalEmprestimos; i++){
-
-        printf("\n====================\n");
-        printf("Codigo Emprestimo: %d\n",
-               emprestimos[i].codigo);
-
-        for(j = 0; j < totalUsuarios; j++){
-            if(usuarios[j].codigo ==
-               emprestimos[i].codigoUsuario){
-
-                printf("Usuario: %s",
-                       usuarios[j].nome);
-                break;
-            }
-        }
-
-        for(j = 0; j < totalLivros; j++){
-            if(livros[j].codigo ==
-               emprestimos[i].codigoLivro){
-
-                printf("Livro: %s",
-                       livros[j].titulo);
-                break;
-            }
-        }
-
-        printf("Status: ");
-
-        if(emprestimos[i].status == 1){
-            printf("Ativo\n");
-        }else{
-            printf("Devolvido\n");
-        }
-        printf("Multa: R$ %.2f\n",emprestimos[i].multa);
-    }
-}
-
-void historicoPorUsuario(){
-
-    int codigoUsuario;
-    int i;
-    int j;
-    int encontrou = 0;
-
-    printf("\n=== HISTORICO POR USUARIO ===\n");
-
-    printf("Digite o codigo do usuario: ");
-    scanf("%d", &codigoUsuario);
-
-    for(i = 0; i < totalEmprestimos; i++){
-
-        if(emprestimos[i].codigoUsuario ==
-           codigoUsuario){
-
-            printf("\n====================\n");
-            printf("Codigo Emprestimo: %d\n",
-                   emprestimos[i].codigo);
-
-            for(j = 0; j < totalLivros; j++){
-                if(livros[j].codigo ==
-                   emprestimos[i].codigoLivro){
-
-                    printf("Livro: %s",
-                           livros[j].titulo);
-                    break;
-                }
-            }
-
-            printf("Status: ");
-
-            if(emprestimos[i].status == 1){
-                printf("Ativo\n");
-            }else{
-                printf("Devolvido\n");
-            }
-
-            encontrou = 1;
-        }
-    }
-
-    if(encontrou == 0){
-        printf("\nNenhum emprestimo encontrado para este usuario.\n");
-    }
-}
-
-void historicoPorLivro(){
-
-    int codigoLivro;
-    int i;
-    int j;
-    int encontrou = 0;
-
-    printf("\n=== HISTORICO POR LIVRO ===\n");
-
-    printf("Digite o codigo do livro: ");
-    scanf("%d", &codigoLivro);
-
-    for(i = 0; i < totalEmprestimos; i++){
-
-        if(emprestimos[i].codigoLivro ==
-           codigoLivro){
-
-            printf("\n====================\n");
-            printf("Codigo Emprestimo: %d\n",
-                   emprestimos[i].codigo);
-
-            for(j = 0; j < totalUsuarios; j++){
-                if(usuarios[j].codigo ==
-                   emprestimos[i].codigoUsuario){
-
-                    printf("Usuario: %s",
-                           usuarios[j].nome);
-                    break;
-                }
-            }
-
-            printf("Status: ");
-
-            if(emprestimos[i].status == 1){
-                printf("Ativo\n");
-            }else{
-                printf("Devolvido\n");
-            }
-
-            encontrou = 1;
-        }
-    }
-
-    if(encontrou == 0){
-        printf("\nNenhum emprestimo encontrado para este livro.\n");
-    }
-}
-
-void salvarLivros(){
+void salvarLivros()
+{
 
     FILE *arquivo;
     int i;
 
     arquivo = fopen("data/livros.txt", "w");
 
-    if(arquivo == NULL){
+    if (arquivo == NULL)
+    {
         printf("\nErro ao salvar livros.\n");
         return;
     }
 
     fprintf(arquivo, "%d\n", totalLivros);
 
-    for(i = 0; i < totalLivros; i++){
+    for (i = 0; i < totalLivros; i++)
+    {
 
         fprintf(arquivo,
                 "%d;%s;%s;%d\n",
@@ -942,20 +812,23 @@ void salvarLivros(){
     fclose(arquivo);
 }
 
-void carregarLivros(){
+void carregarLivros()
+{
 
     FILE *arquivo;
     int i;
 
     arquivo = fopen("data/livros.txt", "r");
 
-    if(arquivo == NULL){
+    if (arquivo == NULL)
+    {
         return;
     }
 
     fscanf(arquivo, "%d\n", &totalLivros);
 
-    for(i = 0; i < totalLivros; i++){
+    for (i = 0; i < totalLivros; i++)
+    {
 
         fscanf(arquivo,
                "%d;%199[^;];%99[^;];%d\n",
@@ -968,20 +841,23 @@ void carregarLivros(){
     fclose(arquivo);
 }
 
-void salvarUsuarios(){
+void salvarUsuarios()
+{
 
     FILE *arquivo;
     int i;
 
     arquivo = fopen("data/usuarios.txt", "w");
 
-    if(arquivo == NULL){
+    if (arquivo == NULL)
+    {
         return;
     }
 
     fprintf(arquivo, "%d\n", totalUsuarios);
 
-    for(i = 0; i < totalUsuarios; i++){
+    for (i = 0; i < totalUsuarios; i++)
+    {
 
         fprintf(arquivo,
                 "%d;%s;%s;%s;%s;%d\n",
@@ -996,20 +872,23 @@ void salvarUsuarios(){
     fclose(arquivo);
 }
 
-void carregarUsuarios(){
+void carregarUsuarios()
+{
 
     FILE *arquivo;
     int i;
 
     arquivo = fopen("data/usuarios.txt", "r");
 
-    if(arquivo == NULL){
+    if (arquivo == NULL)
+    {
         return;
     }
 
     fscanf(arquivo, "%d\n", &totalUsuarios);
 
-    for(i = 0; i < totalUsuarios; i++){
+    for (i = 0; i < totalUsuarios; i++)
+    {
 
         fscanf(arquivo,
                "%d;%99[^;];%19[^;];%19[^;];%99[^;];%d\n",
@@ -1024,53 +903,63 @@ void carregarUsuarios(){
     fclose(arquivo);
 }
 
-void salvarEmprestimos(){
+void salvarEmprestimos()
+{
 
     FILE *arquivo;
     int i;
 
     arquivo = fopen("data/emprestimos.txt", "w");
 
-    if(arquivo == NULL){
+    if (arquivo == NULL)
+    {
         return;
     }
 
     fprintf(arquivo, "%d\n", totalEmprestimos);
 
-    for(i = 0; i < totalEmprestimos; i++){
+    for (i = 0; i < totalEmprestimos; i++)
+    {
 
         fprintf(arquivo,
-                "%d;%d;%d;%d\n",
+                "%d;%d;%d;%d;%d;%.2f\n",
                 emprestimos[i].codigo,
                 emprestimos[i].codigoUsuario,
                 emprestimos[i].codigoLivro,
-                emprestimos[i].status);
+                emprestimos[i].status,
+                emprestimos[i].diasEmprestimos,
+                emprestimos[i].multa);
     }
 
     fclose(arquivo);
 }
 
-void carregarEmprestimos(){
+void carregarEmprestimos()
+{
 
     FILE *arquivo;
     int i;
 
     arquivo = fopen("data/emprestimos.txt", "r");
 
-    if(arquivo == NULL){
+    if (arquivo == NULL)
+    {
         return;
     }
 
     fscanf(arquivo, "%d\n", &totalEmprestimos);
 
-    for(i = 0; i < totalEmprestimos; i++){
+    for (i = 0; i < totalEmprestimos; i++)
+    {
 
         fscanf(arquivo,
-               "%d;%d;%d;%d\n",
+               "%d;%d;%d;%d;%d;%f\n",
                &emprestimos[i].codigo,
                &emprestimos[i].codigoUsuario,
                &emprestimos[i].codigoLivro,
-               &emprestimos[i].status);
+               &emprestimos[i].status,
+               &emprestimos[i].diasEmprestimos,
+               &emprestimos[i].multa);
     }
 
     fclose(arquivo);
