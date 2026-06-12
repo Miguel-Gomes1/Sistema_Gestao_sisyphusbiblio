@@ -30,7 +30,7 @@ struct Emprestimo
     int codigoLivro;
     int status;
     int diasEmprestimos;
-    char dataEmprestimo[11];
+    char dataEmprestimo[20];
     float multa;
 };
 
@@ -654,12 +654,8 @@ void realizarEmprestimo()
 
     emprestimos[totalEmprestimos].diasEmprestimos = data->tm_yday;
 
-    emprestimos[totalEmprestimos].diasEmprestimos =
-    data->tm_yday;
-
-    snprintf(
+    sprintf(
     emprestimos[totalEmprestimos].dataEmprestimo,
-    sizeof(emprestimos[totalEmprestimos].dataEmprestimo),
     "%02d/%02d/%04d",
     data->tm_mday,
     data->tm_mon + 1,
