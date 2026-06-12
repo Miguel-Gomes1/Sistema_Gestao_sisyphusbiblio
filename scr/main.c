@@ -326,17 +326,21 @@ void listarLivros()
 void buscarLivro()
 {
     int i;
-    int codigoBuscado;
     int encontrou = 0;
+    char tituloBuscado[200];
 
-    printf("\n=== Buscar Livro ===\n");
+    getchar();
 
-    printf("Digite o código do livro: ");
-    scanf("%d", &codigoBuscado);
+    printf("\n=== BUSCAR LIVRO ===\n");
+    printf("Digite o titulo: ");
 
-    for (i = 0; i < totalLivros; i++)
+    fgets(tituloBuscado,
+          sizeof(tituloBuscado),
+          stdin);
+
+    for(i = 0; i < totalLivros; i++)
     {
-        if (livros[i].codigo == codigoBuscado)
+        if(strcmp(livros[i].titulo, tituloBuscado) == 0)
         {
             printf("\nLivro encontrado!\n");
 
@@ -346,7 +350,7 @@ void buscarLivro()
 
             printf("Status: ");
 
-            if (livros[i].status == 1)
+            if(livros[i].status == 1)
             {
                 printf("Ativo\n");
             }
@@ -360,7 +364,7 @@ void buscarLivro()
         }
     }
 
-    if (encontrou == 0)
+    if(encontrou == 0)
     {
         printf("\nLivro nao encontrado.\n");
     }
