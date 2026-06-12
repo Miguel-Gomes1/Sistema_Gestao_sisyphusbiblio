@@ -30,6 +30,7 @@ struct Emprestimo
     int codigoLivro;
     int status;
     int diasEmprestimos;
+    char dataEmprestimo[11];
     float multa;
 };
 
@@ -615,6 +616,17 @@ void realizarEmprestimo()
         return;
     }
 
+    for (i = 0; i < totalEmprestimos; i++)
+    {
+        if (emprestimos[i].codigoUsuario == codigoUsuario &&
+            emprestimos[i].multa > 0)
+        {
+            printf("\nUsuario possui multa pendente de R$ %.2f\n",
+                   emprestimos[i].multa);
+            return;
+        }
+    }
+
     for (i = 0; i < totalLivros; i++)
     {
         if (livros[i].codigo == codigoLivro)
@@ -641,6 +653,18 @@ void realizarEmprestimo()
     struct tm *data = localtime(&t);
 
     emprestimos[totalEmprestimos].diasEmprestimos = data->tm_yday;
+
+    emprestimos[totalEmprestimos].diasEmprestimos =
+    data->tm_yday;
+
+    snprintf(
+    emprestimos[totalEmprestimos].dataEmprestimo,
+    sizeof(emprestimos[totalEmprestimos].dataEmprestimo),
+    "%02d/%02d/%04d",
+    data->tm_mday,
+    data->tm_mon + 1,
+    data->tm_year + 1900
+    );
 
     for (i = 0; i < totalEmprestimos; i++)
     {
@@ -706,6 +730,9 @@ void listarEmprestimos()
                 break;
             }
         }
+
+        printf("Data do emprestimo: %s\n",
+        emprestimos[i].dataEmprestimo);
 
         printf("Status: ");
 
@@ -922,13 +949,14 @@ void salvarEmprestimos()
     {
 
         fprintf(arquivo,
-                "%d;%d;%d;%d;%d;%.2f\n",
-                emprestimos[i].codigo,
-                emprestimos[i].codigoUsuario,
-                emprestimos[i].codigoLivro,
-                emprestimos[i].status,
-                emprestimos[i].diasEmprestimos,
-                emprestimos[i].multa);
+        "%d;%d;%d;%d;%d;%s;%.2f\n",
+        emprestimos[i].codigo,
+        emprestimos[i].codigoUsuario,
+        emprestimos[i].codigoLivro,
+        emprestimos[i].status,
+        emprestimos[i].diasEmprestimos,
+        emprestimos[i].dataEmprestimo,
+        emprestimos[i].multa);;
     }
 
     fclose(arquivo);
@@ -953,13 +981,14 @@ void carregarEmprestimos()
     {
 
         fscanf(arquivo,
-               "%d;%d;%d;%d;%d;%f\n",
-               &emprestimos[i].codigo,
-               &emprestimos[i].codigoUsuario,
-               &emprestimos[i].codigoLivro,
-               &emprestimos[i].status,
-               &emprestimos[i].diasEmprestimos,
-               &emprestimos[i].multa);
+        "%d;%d;%d;%d;%d;%10[^;];%f\n",
+        &emprestimos[i].codigo,
+        &emprestimos[i].codigoUsuario,
+        &emprestimos[i].codigoLivro,
+        &emprestimos[i].status,
+        &emprestimos[i].diasEmprestimos,
+        emprestimos[i].dataEmprestimo,
+        &emprestimos[i].multa);
     }
 
     fclose(arquivo);
