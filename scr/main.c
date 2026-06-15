@@ -517,10 +517,10 @@ void listarUsuario()
     {
         printf("\n====================\n");
         printf("Codigo: %d\n", usuarios[i].codigo);
-        printf("Nome: %s", usuarios[i].nome);
-        printf("CPF: %s", usuarios[i].cpf);
-        printf("Telefone: %s", usuarios[i].telefone);
-        printf("Email: %s", usuarios[i].email);
+        printf("Nome: %s\n", usuarios[i].nome);
+        printf("CPF: %s\n", usuarios[i].cpf);
+        printf("Telefone: %s\n", usuarios[i].telefone);
+        printf("Email: %s\n", usuarios[i].email);
 
         printf("Status: ");
 
@@ -554,10 +554,10 @@ void buscarUsuario()
             printf("\nUsuario encontrado!\n");
 
             printf("Codigo: %d\n", usuarios[i].codigo);
-            printf("Nome: %s", usuarios[i].nome);
-            printf("CPF: %s", usuarios[i].cpf);
-            printf("Telefone: %s", usuarios[i].telefone);
-            printf("Email: %s", usuarios[i].email);
+            printf("Nome: %s\n", usuarios[i].nome);
+            printf("CPF: %s\n", usuarios[i].cpf);
+            printf("Telefone: %s\n", usuarios[i].telefone);
+            printf("Email: %s\n", usuarios[i].email);
 
             printf("Status: ");
 
