@@ -10,6 +10,8 @@ struct Livro
     int codigo;
     char titulo[200];
     char autor[100];
+    char editora[100];
+    char isbn[20];
     int status;
 };
 
@@ -263,9 +265,12 @@ void menuEmprestimos()
 void cadastrarLivro()
 {
 
+    int i;
+    int isbnExiste = 0;
+
     if (totalLivros >= MAX)
     {
-        printf("\nLimite de livros atingido!!!!\n");
+        printf("\nLimite de livros atingido!\n");
         return;
     }
 
@@ -284,7 +289,38 @@ void cadastrarLivro()
     fgets(livros[totalLivros].autor,
           sizeof(livros[totalLivros].autor),
           stdin);
+
+    printf("Editora: ");
+    fgets(livros[totalLivros].editora,
+          sizeof(livros[totalLivros].editora),
+          stdin);
+
+    printf("ISBN: ");
+    fgets(livros[totalLivros].isbn,
+          sizeof(livros[totalLivros].isbn),
+          stdin);
+
+    for (i = 0; i < totalLivros; i++)
+    {
+
+        if (strcmp(livros[i].isbn,
+                   livros[totalLivros].isbn) == 0)
+        {
+
+            isbnExiste = 1;
+            break;
+        }
+    }
+
+    if (isbnExiste == 1)
+    {
+
+        printf("\nISBN ja cadastrado!\n");
+        return;
+    }
+
     livros[totalLivros].status = 1;
+
     totalLivros++;
 
     printf("\nLivro cadastrado com sucesso!\n");
@@ -306,10 +342,12 @@ void listarLivros()
     for (i = 0; i < totalLivros; i++)
     {
 
-        printf("\n---------------------------");
-        printf("\nCodigo: %d\n", livros[i].codigo);
-        printf("Titulo: %s", livros[i].titulo);
-        printf("Autor: %s", livros[i].autor);
+        printf("Codigo: %d\n", livros[i].codigo);
+        printf("Titulo: %s\n", livros[i].titulo);
+        printf("Autor: %s\n", livros[i].autor);
+        printf("Editora: %s\n", livros[i].editora);
+        printf("ISBN: %s\n", livros[i].isbn);
+
         printf("Status: ");
 
         if (livros[i].status == 1)
@@ -320,6 +358,8 @@ void listarLivros()
         {
             printf("Inativo\n");
         }
+
+        printf("---------------------------\n");
     }
 }
 
@@ -338,19 +378,21 @@ void buscarLivro()
           sizeof(tituloBuscado),
           stdin);
 
-    for(i = 0; i < totalLivros; i++)
+    for (i = 0; i < totalLivros; i++)
     {
-        if(strcmp(livros[i].titulo, tituloBuscado) == 0)
+        if (strcmp(livros[i].titulo, tituloBuscado) == 0)
         {
             printf("\nLivro encontrado!\n");
 
             printf("Codigo: %d\n", livros[i].codigo);
             printf("Titulo: %s", livros[i].titulo);
             printf("Autor: %s", livros[i].autor);
+            printf("Editora: %s", livros[i].editora);
+            printf("ISBN: %s", livros[i].isbn);
 
             printf("Status: ");
 
-            if(livros[i].status == 1)
+            if (livros[i].status == 1)
             {
                 printf("Ativo\n");
             }
@@ -364,7 +406,7 @@ void buscarLivro()
         }
     }
 
-    if(encontrou == 0)
+    if (encontrou == 0)
     {
         printf("\nLivro nao encontrado.\n");
     }
@@ -659,12 +701,11 @@ void realizarEmprestimo()
     emprestimos[totalEmprestimos].diasEmprestimos = data->tm_yday;
 
     sprintf(
-    emprestimos[totalEmprestimos].dataEmprestimo,
-    "%02d/%02d/%04d",
-    data->tm_mday,
-    data->tm_mon + 1,
-    data->tm_year + 1900
-    );
+        emprestimos[totalEmprestimos].dataEmprestimo,
+        "%02d/%02d/%04d",
+        data->tm_mday,
+        data->tm_mon + 1,
+        data->tm_year + 1900);
 
     for (i = 0; i < totalEmprestimos; i++)
     {
@@ -732,7 +773,7 @@ void listarEmprestimos()
         }
 
         printf("Data do emprestimo: %s\n",
-        emprestimos[i].dataEmprestimo);
+               emprestimos[i].dataEmprestimo);
 
         printf("Status: ");
 
@@ -829,10 +870,12 @@ void salvarLivros()
     {
 
         fprintf(arquivo,
-                "%d;%s;%s;%d\n",
+                "%d;%s;%s;%s;%s;%d\n",
                 livros[i].codigo,
                 livros[i].titulo,
                 livros[i].autor,
+                livros[i].editora,
+                livros[i].isbn,
                 livros[i].status);
     }
 
@@ -858,10 +901,12 @@ void carregarLivros()
     {
 
         fscanf(arquivo,
-               "%d;%199[^;];%99[^;];%d\n",
+               "%d;%199[^;];%99[^;];%99[^;];%19[^;];%d\n",
                &livros[i].codigo,
                livros[i].titulo,
                livros[i].autor,
+               livros[i].editora,
+               livros[i].isbn,
                &livros[i].status);
     }
 
@@ -949,14 +994,15 @@ void salvarEmprestimos()
     {
 
         fprintf(arquivo,
-        "%d;%d;%d;%d;%d;%s;%.2f\n",
-        emprestimos[i].codigo,
-        emprestimos[i].codigoUsuario,
-        emprestimos[i].codigoLivro,
-        emprestimos[i].status,
-        emprestimos[i].diasEmprestimos,
-        emprestimos[i].dataEmprestimo,
-        emprestimos[i].multa);;
+                "%d;%d;%d;%d;%d;%s;%.2f\n",
+                emprestimos[i].codigo,
+                emprestimos[i].codigoUsuario,
+                emprestimos[i].codigoLivro,
+                emprestimos[i].status,
+                emprestimos[i].diasEmprestimos,
+                emprestimos[i].dataEmprestimo,
+                emprestimos[i].multa);
+        ;
     }
 
     fclose(arquivo);
@@ -981,14 +1027,14 @@ void carregarEmprestimos()
     {
 
         fscanf(arquivo,
-        "%d;%d;%d;%d;%d;%10[^;];%f\n",
-        &emprestimos[i].codigo,
-        &emprestimos[i].codigoUsuario,
-        &emprestimos[i].codigoLivro,
-        &emprestimos[i].status,
-        &emprestimos[i].diasEmprestimos,
-        emprestimos[i].dataEmprestimo,
-        &emprestimos[i].multa);
+               "%d;%d;%d;%d;%d;%10[^;];%f\n",
+               &emprestimos[i].codigo,
+               &emprestimos[i].codigoUsuario,
+               &emprestimos[i].codigoLivro,
+               &emprestimos[i].status,
+               &emprestimos[i].diasEmprestimos,
+               emprestimos[i].dataEmprestimo,
+               &emprestimos[i].multa);
     }
 
     fclose(arquivo);
