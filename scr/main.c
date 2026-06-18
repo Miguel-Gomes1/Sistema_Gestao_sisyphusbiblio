@@ -378,9 +378,11 @@ void buscarLivro()
           sizeof(tituloBuscado),
           stdin);
 
+          tituloBuscado[strcspn(tituloBuscado, "\n")] = '\0';
+
     for (i = 0; i < totalLivros; i++)
     {
-        if (strcmp(livros[i].titulo, tituloBuscado) == 0)
+        if (strstr(livros[i].titulo, tituloBuscado) != NULL)
         {
             printf("\nLivro encontrado!\n");
 
