@@ -51,6 +51,7 @@ Desenvolver uma aplicação em linguagem C capaz de:
 * Registro de devoluções.
 * Atualização automática do estoque de exemplares.
 * Encerramento de empréstimos ativos.
+* Registrar Multa
 
 ### 📊 Histórico
 
@@ -69,10 +70,6 @@ O sistema é composto pelas seguintes entidades:
 * Título
 * Autor
 * Editora
-* Categoria
-* Ano de Publicação
-* Quantidade de Exemplares
-* Localização
 * Status
 
 ### Usuário
@@ -90,8 +87,8 @@ O sistema é composto pelas seguintes entidades:
 * Código do Usuário
 * Código do Livro
 * Data do Empréstimo
-* Data Prevista para Devolução
 * Status
+* Multa
 
 ### Devolução
 
@@ -99,6 +96,7 @@ O sistema é composto pelas seguintes entidades:
 * Código do Empréstimo
 * Data da Devolução
 * Status
+* Multa
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -126,7 +124,6 @@ SisyphusBiblio/
 │   ├── livros.txt
 │   ├── usuarios.txt
 │   ├── emprestimos.txt
-│   └── devolucoes.txt
 │
 ├── docs/
 │   ├── levantamento_requisitos.pdf
