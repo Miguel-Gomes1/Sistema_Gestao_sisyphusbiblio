@@ -98,4 +98,3 @@
 97;Thiago Nunes;12345678997;81999990097;thiago.nunes97@email.com;1
 98;Amanda Castro;12345678998;81999990098;amanda.castro98@email.com;1
 99;Felipe Moreira;12345678999;81999990099;felipe.moreira99@email.com;1
-100;Mariana Araujo;12345679000;81999990100;mariana.araujo100@email.com;1
