@@ -342,11 +342,11 @@ void listarLivros()
     for (i = 0; i < totalLivros; i++)
     {
 
-        printf("Codigo: %d\n", livros[i].codigo);
-        printf("Titulo: %s\n", livros[i].titulo);
-        printf("Autor: %s\n", livros[i].autor);
-        printf("Editora: %s\n", livros[i].editora);
-        printf("ISBN: %s\n", livros[i].isbn);
+        printf("Codigo: %d", livros[i].codigo);
+        printf("Titulo: %s", livros[i].titulo);
+        printf("Autor: %s", livros[i].autor);
+        printf("Editora: %s", livros[i].editora);
+        printf("ISBN: %s", livros[i].isbn);
 
         printf("Status: ");
 
@@ -518,11 +518,11 @@ void listarUsuario()
     for (i = 0; i < totalUsuarios; i++)
     {
         printf("\n====================\n");
-        printf("Codigo: %d\n", usuarios[i].codigo);
-        printf("Nome: %s\n", usuarios[i].nome);
-        printf("CPF: %s\n", usuarios[i].cpf);
-        printf("Telefone: %s\n", usuarios[i].telefone);
-        printf("Email: %s\n", usuarios[i].email);
+        printf("Codigo: %d", usuarios[i].codigo);
+        printf("Nome: %s", usuarios[i].nome);
+        printf("CPF: %s", usuarios[i].cpf);
+        printf("Telefone: %s", usuarios[i].telefone);
+        printf("Email: %s", usuarios[i].email);
 
         printf("Status: ");
 
@@ -555,11 +555,11 @@ void buscarUsuario()
         {
             printf("\nUsuario encontrado!\n");
 
-            printf("Codigo: %d\n", usuarios[i].codigo);
-            printf("Nome: %s\n", usuarios[i].nome);
-            printf("CPF: %s\n", usuarios[i].cpf);
-            printf("Telefone: %s\n", usuarios[i].telefone);
-            printf("Email: %s\n", usuarios[i].email);
+            printf("Codigo: %d", usuarios[i].codigo);
+            printf("Nome: %s", usuarios[i].nome);
+            printf("CPF: %s", usuarios[i].cpf);
+            printf("Telefone: %s", usuarios[i].telefone);
+            printf("Email: %s", usuarios[i].email);
 
             printf("Status: ");
 
